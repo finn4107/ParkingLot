@@ -2,7 +2,6 @@ package Parking;
 
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
-
 public class Driver {
     public static void main(String[] args) {
         ParkingLot parkingLot = new ParkingLot(50, 2); // 50 Plätze pro Stockwerk, 2 Stockwerke
