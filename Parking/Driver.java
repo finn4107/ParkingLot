@@ -1,5 +1,5 @@
 package Parking;
-
+// code created by Finn Bachmann
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 // Main class
