@@ -1,5 +1,3 @@
-package Parking;
-
 public class ExitBarrier {
     private String name;
 

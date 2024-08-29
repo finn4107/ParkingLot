@@ -1,5 +1,3 @@
-package Parking;
-
 public class EntranceBarrier {
     public void openBarrier(Ticket ticket) {
         if (ticket != null) {

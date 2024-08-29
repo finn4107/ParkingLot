@@ -1,5 +1,3 @@
-package Parking;
-
 public class Ticket {
     private long entryTime;
     private long exitTime;

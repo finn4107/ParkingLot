@@ -1,5 +1,3 @@
-package Parking;
-
 public class TicketMachine {
     private ParkingLot parkingLot;
 

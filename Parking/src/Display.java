@@ -1,5 +1,3 @@
-package Parking;
-
 public class Display {
     private ParkingLot parkingLot;
 

@@ -1,5 +1,3 @@
-package Parking;
-
 public class PaymentCounter {
     private static final double RATE_PER_MINUTE = 0.05; // 5 Cent pro Sekunde (1 Sekunde = 1 Minute)
 
