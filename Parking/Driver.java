@@ -77,7 +77,6 @@ public class Driver {
                 default:
                     System.out.println("Ungültige Aktion, bitte erneut versuchen.");
             }
-            scanner.close();
         }
     }
 }
