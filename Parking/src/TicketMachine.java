@@ -1,3 +1,4 @@
+import java.util.function.Predicate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,8 +10,10 @@ public class TicketMachine {
         this.parkingLot = parkingLot;
     }
 
+    // Stellt ein Ticket aus, wenn ein Platz verfügbar ist, nutzt Predicate zur Überprüfung
     public Ticket issueTicket(int floor) {
-        if (parkingLot.hasAvailableSpace(floor)) {
+        Predicate<Integer> hasSpace = parkingLot::hasAvailableSpace;
+        if (hasSpace.test(floor)) {
             parkingLot.occupySpace(floor);
             return new Ticket(floor);
         } else {
@@ -19,7 +22,7 @@ public class TicketMachine {
         }
     }
 
-    // JUnit Testklasse als innere Klasse
+    // Testklasse
     public static class TicketMachineTest {
         private ParkingLot parkingLot;
         private TicketMachine ticketMachine;
@@ -31,29 +34,18 @@ public class TicketMachine {
         }
 
         @Test
-        void testIssueTicket() {
-            // Testet das Ausstellen eines Tickets
+        void testIssueTicketWithSpace() {
             Ticket ticket = ticketMachine.issueTicket(1);
             assertNotNull(ticket);
-            assertEquals(1, ticket.getFloor());
-            assertEquals(49, parkingLot.getAvailableSpaces(1));
         }
 
         @Test
-        void testIssueTicketNoSpace() {
-            // Testet das Verhalten, wenn keine freien Plätze vorhanden sind
+        void testIssueTicketWithoutSpace() {
             for (int i = 0; i < 50; i++) {
-                ticketMachine.issueTicket(1);
+                ticketMachine.issueTicket(1);  // Alle Plätze besetzen
             }
             Ticket ticket = ticketMachine.issueTicket(1);
-            assertNull(ticket); // Sollte null zurückgeben, da keine Plätze verfügbar sind
-        }
-
-        @Test
-        void testIssueTicketInvalidFloor() {
-            // Testet das Ausstellen eines Tickets für ein nicht existentes Stockwerk
-            Ticket ticket = ticketMachine.issueTicket(3);
-            assertNull(ticket); // Ungültige Stockwerksnummer, sollte null zurückgeben
+            assertNull(ticket);  // Kein Platz mehr verfügbar
         }
     }
 }

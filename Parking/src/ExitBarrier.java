@@ -1,3 +1,5 @@
+import java.util.function.Consumer;
+
 public class ExitBarrier {
     private String name;
 
@@ -6,11 +8,13 @@ public class ExitBarrier {
     }
 
     public void openBarrier(Ticket ticket) {
-        if (ticket != null) {
-            System.out.println(name + " Ausgangsschranke geöffnet.");
-        } else {
-            System.out.println(name + " Ausgangsschranke bleibt geschlossen.");
-        }
+        Consumer<Ticket> open = t -> {
+            if (t != null) {
+                System.out.println(name + " Ausgangsschranke geöffnet.");
+            } else {
+                System.out.println(name + " Ausgangsschranke bleibt geschlossen.");
+            }
+        };
+        open.accept(ticket);
     }
 }
-

@@ -1,5 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.function.Function;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ParkingLot {
     private Map<Integer, Integer> availableSpacesPerFloor;
 
+    // Konstruktor initialisiert die Anzahl der verfügbaren Plätze pro Stockwerk
     public ParkingLot(int spacesPerFloor, int floors) {
         availableSpacesPerFloor = new HashMap<>();
         for (int i = 1; i <= floors; i++) {
@@ -30,38 +33,36 @@ public class ParkingLot {
         return availableSpacesPerFloor.getOrDefault(floor, 0);
     }
 
+    // Verfügbare Parkplätze pro Stockwerk anzeigen, nutzt Streams zur Darstellung
     public void displayAvailableSpaces() {
-        for (Map.Entry<Integer, Integer> entry : availableSpacesPerFloor.entrySet()) {
-            System.out.println("Verfügbare Parkplätze auf Stock " + entry.getKey() + ": " + entry.getValue());
-        }
+        availableSpacesPerFloor.entrySet().stream()
+                .map(entry -> "Verfügbare Parkplätze auf Stock " + entry.getKey() + ": " + entry.getValue())
+                .forEach(System.out::println);
     }
 
-    // JUnit Testklasse als innere Klasse
+    // Testklasse für Unit-Tests
     public static class ParkingLotTest {
         private ParkingLot parkingLot;
 
         @BeforeEach
         void setUp() {
-            parkingLot = new ParkingLot(50, 2); // 50 Plätze pro Stockwerk, 2 Stockwerke
+            parkingLot = new ParkingLot(50, 2);  // Initialisiert mit 50 Plätzen pro Stockwerk, 2 Stockwerke
         }
 
         @Test
         void testHasAvailableSpace() {
-            // Testet, ob freie Plätze verfügbar sind
             assertTrue(parkingLot.hasAvailableSpace(1));
             assertTrue(parkingLot.hasAvailableSpace(2));
         }
 
         @Test
         void testOccupySpace() {
-            // Testet das Belegen eines Platzes
             parkingLot.occupySpace(1);
             assertEquals(49, parkingLot.getAvailableSpaces(1));
         }
 
         @Test
         void testReleaseSpace() {
-            // Testet das Freigeben eines Platzes
             parkingLot.occupySpace(1);
             parkingLot.releaseSpace(1);
             assertEquals(50, parkingLot.getAvailableSpaces(1));
@@ -69,21 +70,18 @@ public class ParkingLot {
 
         @Test
         void testGetAvailableSpaces() {
-            // Überprüft die Anzahl der verfügbaren Plätze
             assertEquals(50, parkingLot.getAvailableSpaces(1));
             assertEquals(50, parkingLot.getAvailableSpaces(2));
         }
 
         @Test
         void testReleaseSpaceWhenFull() {
-            // Testet das Freigeben von Plätzen, wenn das Stockwerk bereits voll ist
             parkingLot.releaseSpace(1);
-            assertEquals(51, parkingLot.getAvailableSpaces(1)); // Kapazität überschreiten
+            assertEquals(51, parkingLot.getAvailableSpaces(1));  // Kapazität überschreiten
         }
 
         @Test
         void testOccupySpaceUntilFull() {
-            // Testet das Belegen aller Plätze auf einem Stockwerk
             for (int i = 0; i < 50; i++) {
                 parkingLot.occupySpace(1);
             }

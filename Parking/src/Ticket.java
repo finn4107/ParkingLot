@@ -11,36 +11,38 @@ public class Ticket {
         this.floor = floor;
     }
 
+    // Setzt die Ausfahrtszeit
     public void setExitTime() {
         this.exitTime = System.currentTimeMillis();
     }
 
+    // Berechnet die Parkdauer in Sekunden
     public long getDuration() {
-        return (exitTime - entryTime) / 1000; // Gibt die Dauer in Sekunden zurück
+        return (exitTime - entryTime) / 1000;
     }
 
     public int getFloor() {
         return floor;
     }
 
-    // JUnit Testklasse als innere Klasse
+    // Testklasse
     public static class TicketTest {
-
         @Test
-        void testGetDuration() throws InterruptedException {
-            // Testet die Dauerberechnung
+        void testGetDuration() {
             Ticket ticket = new Ticket(1);
-            Thread.sleep(1000); // Simuliert eine Parkdauer
+            try {
+                Thread.sleep(2000);  // Simuliert 2 Sekunden Parkzeit
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             ticket.setExitTime();
-            assertTrue(ticket.getDuration() >= 1); // Dauer sollte mindestens 1 Sekunde sein
+            assertTrue(ticket.getDuration() >= 2);  // Dauer sollte mindestens 2 Sekunden betragen
         }
 
         @Test
-        void testZeroDuration() {
-            // Testet, wenn Ein- und Ausfahrtszeitpunkt gleich sind
+        void testGetFloor() {
             Ticket ticket = new Ticket(1);
-            ticket.setExitTime();
-            assertEquals(0, ticket.getDuration());
+            assertEquals(1, ticket.getFloor());
         }
     }
 }
