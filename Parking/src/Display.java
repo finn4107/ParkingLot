@@ -1,3 +1,5 @@
+import java.util.function.Consumer;
+
 public class Display {
     private ParkingLot parkingLot;
 
@@ -6,7 +8,7 @@ public class Display {
     }
 
     public void showAvailableSpaces() {
-        parkingLot.displayAvailableSpaces();
+        Consumer<ParkingLot> displaySpaces = ParkingLot::displayAvailableSpaces;
+        displaySpaces.accept(parkingLot);
     }
 }
-
